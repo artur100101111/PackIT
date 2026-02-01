@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Orders\Commands\DelecteOrder\**" />
+    <EmbeddedResource Remove="Orders\Commands\DelecteOrder\**" />
+    <None Remove="Orders\Commands\DelecteOrder\**" />
+	  
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ItemTypes\DTO\" />
+
+	  
+  </ItemGroup>
+
+	<ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PackIT.Domain\PackIT.Domain.csproj" />
+    <ProjectReference Include="..\PackIt.Shared.Abstractions\PackIt.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\PackIT.Shared\PackIT.Shared.csproj" />
+
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+	  <_Parameter1>PackIT.UnitTests.Application</_Parameter1>
+	  </AssemblyAttribute>
+	  
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		  <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+	  </AssemblyAttribute>
+
+
+  </ItemGroup>
+
+</Project>
