@@ -21,7 +21,7 @@ namespace PackIT.Shared.DtoTree.DtoTreeTraversal.TraverseStrategy
 
         private void TraverseReq(TEntity root, List<TEntity> nodes)
         {
-            nodes.Add(root);
+            nodes.Add(root); //za każdym razem dodajemy do listy noda i przechodzimy dalej.
             foreach (var node in root.Children)
             {
                 TraverseReq(node, nodes);

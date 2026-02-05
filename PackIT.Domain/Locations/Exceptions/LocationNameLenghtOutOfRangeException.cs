@@ -1,8 +1,8 @@
-﻿using PackIT.Domain.Common;
+﻿using PackIt.Shared.Abstractions.Domain.Exceptions;
 
 namespace PackIT.Domain.Locations.Exceptions
 {
-    public class LocationNameLenghtOutOfRangeException:PackItException
+    public class LocationNameLenghtOutOfRangeException: DomainRuleViolationException
     {
         public LocationNameLenghtOutOfRangeException(string? message) : base(message)
         {

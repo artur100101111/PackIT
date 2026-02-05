@@ -13,7 +13,6 @@ namespace PackIt.Persistance.EF.Contexts
     internal sealed class WriteDbContext : DbContext
     {
         public DbSet<OrderBase> Orders { get; set; }
-
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<Location> Locations { get; set; }

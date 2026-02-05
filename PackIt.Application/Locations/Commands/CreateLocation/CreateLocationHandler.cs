@@ -29,7 +29,7 @@ namespace PackIt.Application.Locations.Commands.CreateLocation
             command.LocationId = _idGenerator.CreateId();
 
             var (Id, Name, Code,Description, ancestorId, LocationType) 
-                =(command.LocationId.Value, command.Name,command.Code, command.Description,  command.ancesstorId, command.LocationType);
+                =(command.LocationId.Value, command.Name,command.Code, command.Description,  command.ancestorId, command.LocationType);
 
             if (ancestorId is long ancesstiorIdValue)
             {

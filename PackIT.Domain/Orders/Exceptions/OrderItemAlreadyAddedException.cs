@@ -1,8 +1,8 @@
-﻿using PackIT.Domain.Common;
+﻿using PackIt.Shared.Abstractions.Domain.Exceptions;
 
 namespace PackIT.Domain.Orders.Exceptions
 {
-    public class OrderItemAlreadyAddedException : PackItException
+    public class OrderItemAlreadyAddedException : DomainRuleViolationException
     {
 
 

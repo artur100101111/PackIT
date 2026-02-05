@@ -1,4 +1,4 @@
-﻿namespace PackIT.Domain.Common
+﻿namespace PackIt.Shared.Abstractions.Domain.Exceptions
 {
     public abstract class PackItException : Exception
     {

@@ -17,7 +17,7 @@ namespace PackIT.Domain.Orders
 
 
             if (items == null || items.Count == 0)
-                throw new OrderMustHaveAtLeastOneItemException(items is null ? "Items list is null" : "Items list is empty");
+                throw new EmptyOrderException(items is null ? "Items list is null" : "Items list is empty");
 
             foreach (var item in items)
             {

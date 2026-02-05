@@ -5,12 +5,12 @@ namespace PackIt.Application.Locations.Commands.CreateLocation
 {
     public record CreateLocationCommand : ICommand
     {
-        public CreateLocationCommand(long? LocationId, string Name, string Code, string? Description, LocationTypeEnum LocationType,  long? AncesstorId)
+        public CreateLocationCommand(long? LocationId, string Name, string Code, string? Description, LocationTypeEnum LocationType,  long? ancestorId)
         {
             this.LocationId = LocationId;
             this.Name = Name;
             this.Code = Code;
-            this.ancesstorId = AncesstorId;
+            this.ancestorId = ancestorId;
             this.LocationType = LocationType;
             this.Description = Description;
 
@@ -21,6 +21,6 @@ namespace PackIt.Application.Locations.Commands.CreateLocation
         public string Code { get; init; }
         public string? Description { get; init; }
         public LocationTypeEnum LocationType { get; set; }
-        public long? ancesstorId { get; init; }
+        public long? ancestorId { get; init; }
     }
 }

@@ -1,6 +1,0 @@
-@PackIT.API_HostAddress = http://localhost:5009
-
-GET {{PackIT.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

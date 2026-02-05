@@ -1,4 +1,4 @@
-﻿using PackIT.Domain.Common;
+﻿using PackIt.Shared.Abstractions.Domain.Exceptions;
 
 namespace PackIt.Application.Locations.Exceptions
 {

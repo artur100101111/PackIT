@@ -15,7 +15,7 @@ namespace PackIT.Infrastructure.Context
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var correlationId = context.Request.Headers[_headerName].FirstOrDefault() ?? Guid.NewGuid().ToString() ;
-
+          
             context.Items["correlationId"] = correlationId ;
             context.Response.Headers[_headerName] = correlationId;
 

@@ -10,7 +10,7 @@ using PackIt.Application.Orders.Queries;
 
 namespace PackIt.Persistance.EF.Orders.Queries.Handlers
 {
-    internal class GetOrderByLocationAndStatusQueryHandler : IQueryHandler<GetOrderByRequestedLocationAndStatusQuery, IEnumerable<OrderDto>>
+    internal class GetOrderByLocationAndStatusQueryHandler : IQueryHandler<GetOrdersByRequestedLocationAndStatusQuery, IEnumerable<OrderDto>>
     {
         private DbSet<OrderReadModel> _orders;
         private IMapper _mapper;
@@ -22,7 +22,7 @@ namespace PackIt.Persistance.EF.Orders.Queries.Handlers
             _mapper = mapper;
             _dateTimeService = dateTimeService;
         }
-        public async Task<IEnumerable<OrderDto>> HandleAsync(GetOrderByRequestedLocationAndStatusQuery query, CancellationToken cancellationToken)
+        public async Task<IEnumerable<OrderDto>> HandleAsync(GetOrdersByRequestedLocationAndStatusQuery query, CancellationToken cancellationToken)
         {
             var orders = await _orders.Where(o => o.RequestedDeliveryLocation.Code == query.LocationCode && o.State == query.OrderState)
                 .ProjectTo<OrderDto>(_mapper.ConfigurationProvider)

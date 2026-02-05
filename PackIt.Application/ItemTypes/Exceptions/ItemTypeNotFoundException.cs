@@ -1,8 +1,8 @@
-﻿using PackIT.Domain.Common;
+﻿using PackIt.Shared.Abstractions.Domain.Exceptions;
 
 namespace PackIt.Application.ItemTypes.Exceptions
 {
-    public class ItemTypeNotFoundException : PackItException
+    public class ItemTypeNotFoundException : NotFoundException
     {
 
 

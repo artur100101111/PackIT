@@ -1,9 +1,9 @@
-﻿using PackIT.Domain.Common;
+﻿using PackIt.Shared.Abstractions.Domain.Exceptions;
 
 namespace PackIT.Domain.Orders.Exceptions
 {
 
-    public class OrderItemNotFoundException : PackItException
+    public class OrderItemNotFoundException : NotFoundException
     {
 
 

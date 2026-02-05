@@ -9,13 +9,6 @@ namespace PackIT.Infrastructure.Context
         private IHttpContextAccessor _httpContextAccessor;
         public const string _headerName = "X-Correlation-Id";
 
-        //        OrderService(Service A)
-        //  ↓ HTTP
-        //PaymentService(Service B)
-        //  ↓ HTTP
-        //ShippingService(Service C)
-        //Goal:
-        //One CorrelationId flows through ALL services
         public CorrelationPropagationHandler(IHttpContextAccessor  contextAccessor) 
         {
             _httpContextAccessor = contextAccessor;

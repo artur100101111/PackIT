@@ -17,8 +17,20 @@ namespace PackIT.Shared.DtoTree.DtoTreeTraversal.TraverseStrategy
             yield return root;
 
             foreach (var node in root.Children)
-                foreach (var n in Traverse(node))
+                foreach (var n in Traverse(node))//zwraca wewętrzny iterator po sobie i wszystkich dzieciach
                     yield return n;
+
+            //foreach (var node in root.Children)
+            //{
+            //    var childTraversal = Traverse(node);   // recursive call
+
+            //    foreach (var n in childTraversal)
+            //    {
+            //        yield return n;                    // re-yield results
+            //    }
+            //}
+
+
         }
     }
 }

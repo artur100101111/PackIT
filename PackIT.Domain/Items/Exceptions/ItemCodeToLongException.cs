@@ -1,7 +1,9 @@
 ﻿
+using PackIt.Shared.Abstractions.Domain.Exceptions;
+
 namespace PackIT.Domain.Items
 {
-    internal class ItemCodeLenghtOutOfRangeException : Exception
+    internal class ItemCodeLenghtOutOfRangeException : DomainRuleViolationException
     {
 
 

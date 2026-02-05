@@ -21,6 +21,13 @@ namespace PackIT.API.Controllers.ItemType
             _queryDispatcher = queryDispatcher;
         }
 
+        /// <summary>
+        /// Gets ItemType by Id
+        /// </summary>
+        ///<response code="200">ItemType received sucessfully</response>
+        ///<response code="404">ItemType not found</response>   //-->> 404
+        [ProducesResponseType(typeof(ItemTypeDto),200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{ItemTypeId:long}", Name = "GetItemTypeById")]
         public async Task<ActionResult<ItemTypeDto>> Get([FromRoute] GetItemTypeByIdQuery query, CancellationToken cancellationToken)
         { 
@@ -29,6 +36,14 @@ namespace PackIT.API.Controllers.ItemType
             return OkOrNotFound(result);
         }
 
+
+        /// <summary>
+        /// Gets ItemType by Code (naturall key)
+        /// </summary>
+        ///<response code="200">ItemType received sucessfully</response>
+        ///<response code="404">ItemType not found</response> 
+        [ProducesResponseType(typeof(ItemTypeDto), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("code/{Code}", Name ="GetItemTypeByCode")]
         public async Task<ActionResult<ItemTypeDto>> Get([FromRoute] GetItemTypeByCodeQuery query, CancellationToken cancellationToken)
         {
@@ -37,6 +52,13 @@ namespace PackIT.API.Controllers.ItemType
         }
 
 
+        /// <summary>
+        /// Gets ItemTypes by Name
+        /// </summary>
+        ///<response code="200">ItemTypes received sucessfully</response>
+        ///<response code="404">ItemType not found</response>   //-->> 404
+        [ProducesResponseType(typeof(IEnumerable<ItemTypeDto>), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet(Name ="GetItemTypesByName")]
         public async Task<ActionResult<IEnumerable<ItemTypeDto>>> Get([FromQuery] SearchItemTypeByNameQuery query, CancellationToken cancellationToken)
         {
@@ -45,6 +67,15 @@ namespace PackIT.API.Controllers.ItemType
             return OkOrNotFound(result);
         }
 
+        /// <summary>
+        /// Creates ItemType
+        /// </summary>
+        ///<response code="201">ItemType created sucessfully</response>
+        /// <response code="400">Invalid request data</response>
+        ///<reponse code="409">ItemType already exists</reponse> 
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPost(Name="CreateItemType")]
         public async Task<ActionResult> Post([FromBody] CreateItemTypeCommand command, CancellationToken cancellationToken)
         {
@@ -57,6 +88,18 @@ namespace PackIT.API.Controllers.ItemType
                 );
         }
 
+        /// <summary>
+        /// Udates ItemType
+        /// </summary>
+        /// <remarks>
+        /// Updates existing ItemTypes identified by its Id
+        /// </remarks>
+        ///<response code="204">IltemType created sucessfully</response>
+        ///<response code="400">Invalid request data</response>   
+        ///<response code="400">IltemType not found</response>   
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{ItemTypeId:long}", Name = "UpdateItemType")]
         public async Task<IActionResult> Update([FromRoute] long ItemTypeId, [FromBody] UpdateItemTypeCommand command, CancellationToken cancellationToken)
         {
@@ -67,7 +110,18 @@ namespace PackIT.API.Controllers.ItemType
             return NoContent();
         }
 
-
+        /// <summary>
+        /// Updates ItemType
+        /// </summary>
+        /// <remarks>
+        /// Updates an existing ItemType identified by its Id
+        /// </remarks>
+        /// <reposne code="204">ItemType updated sucessfully</reposne>
+        /// <reposnse code="400">Invalid request data</reposnse>
+        /// <response code="400">IteType not found</response> // -->> 494
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{ItemTypeId:long}", Name ="DeleteItemType")]
         public async Task<IActionResult> Delete([FromRoute]long ItemTypeId, [FromBody] DeleteItemTypeCommand command, CancellationToken cancellationToken)
         {

@@ -28,7 +28,7 @@ Location:
   "code": "L001",
   "description": "Describe the location",
   "locationType": 1,
-  "ancesstorId": null
+  "ancestorId": null
 }
 
 ItemType:
