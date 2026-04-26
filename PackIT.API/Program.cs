@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
 using PackIt.Application;
 using PackIt.Persistance;
@@ -83,13 +84,27 @@ internal class Program
         builder.Services.AddSingleton(builder.Services);//IServiceCollection access for addShared->AddHostedService->GetRegisteredDbContext and run migration on it if needed.
         builder.Services.AddHttpContextAccessor();//used in Infrastructure CorrelationDelegatingHandler-IHttpContextAccessor is a framework service that gives access to the current HttpContextfrom code that is NOT part of the HTTP pipeline.
         builder.Services.AddShared();//hosted service with DbInitializer -> apply migration.
-        builder.Services.AddHttpClient("external1")//adds HTTP Client with its own configuration and  pipeline - it can be used  by name-specific outgoing HTTP client configuration.
-        .AddHttpMessageHandler<CorrelationPropagationHandler>();
 
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddResponseCompression( options => { 
+            options.EnableForHttps = true;
+            options.Providers.Add<GzipCompressionProvider>();
+            options.Providers.Add<BrotliCompressionProvider>();
+
+        } );
+        builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+        {
+            options.Level = System.IO.Compression.CompressionLevel.Fastest;
+        });
+        builder.Services.Configure<BrotliCompressionProviderOptions>(options => 
+        {
+            options.Level = System.IO.Compression.CompressionLevel.Fastest;
+        });
+
 
         builder.Services.AddCors(o =>
         {
@@ -117,7 +132,7 @@ internal class Program
             app.UseSwaggerUI();
         }
 
-  
+        app.UseResponseCompression();
 
         app.UseInfrastructure();//adds Infrastructure RequestIdCorrelation header for logging purposes
 

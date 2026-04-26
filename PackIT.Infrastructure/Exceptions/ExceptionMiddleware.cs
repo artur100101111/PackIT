@@ -1,57 +1,34 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PackIt.Shared.Abstractions.Domain.Exceptions;
-using System.Text.Json;
+using PackIT.Infrastructure.Exceptions;
 
 namespace PackIT.Shared.Exceptions
 {
     public class ExceptionMiddleware : IMiddleware
     {
+        private IEnumerable<IExceptionHandler> _handlers;
+
+        public ExceptionMiddleware(IEnumerable<IExceptionHandler> handlers)
+        {
+            _handlers = handlers;
+        }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
                 await next(context);
             }
-            catch (PackItException ex)
+            catch (Exception ex)
             {
-                string? correlationId = context.Items.TryGetValue("correlationId", out var value) ? value.ToString() : null;
-
-                context.Response.StatusCode = GetResponseCode(ex);  
-                context.Response.Headers.Add("content-type", "application/json");
-                var errorCode = ToUnderscoreCase(ex.GetType().Name.Replace("Exception", string.Empty));
-                var json = JsonSerializer.Serialize(new { ErrorCode= errorCode, Message= ex.Message, CorrelationId= correlationId });
-                await context.Response.WriteAsync(json);
-                return;
+                foreach (var handler in _handlers)
+                {
+                    if (handler.CanHandle(ex))
+                    {
+                        await handler.HandleAsync(context, ex);
+                        return;
+                    }
+                }
             }
-        }
-
-        /// <summary>
-        /// Returns status depending on Domain Exception Type.
-        /// </summary>
-        /// <param name="ex">Excaption</param>
-        /// <returns></returns>
-        private int GetResponseCode(PackItException ex)
-        {
-            return ex switch
-            {
-                NotFoundException => StatusCodes.Status404NotFound,
-
-                AlreadyExistsException => StatusCodes.Status409Conflict,
-
-                DomainRuleViolationException => StatusCodes.Status409Conflict,
-
-                PackItException => StatusCodes.Status400BadRequest
-            };
-
-        }
-
-        private object ToUnderscoreCase(string value)
-        {
-            return string.Concat((value??string.Empty)
-                         .Select(
-                         (x,i) => i> 0 && char.IsUpper(x) && !char.IsUpper(value![i-1]) 
-                         ? $"_{x}" : x.ToString()))
-                         .ToLowerInvariant();
         }
     }
 }

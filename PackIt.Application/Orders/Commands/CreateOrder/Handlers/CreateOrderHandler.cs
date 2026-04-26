@@ -30,7 +30,6 @@ namespace PackIt.Application.Orders.Commands.CreateOrder.Handlers
         {
             //pipeline for Logging, Command Validation, Transaction, Save Steps? 
             command.OrderId = _idGenerator.CreateId();
-
             var(OrderId, RequestedDeliveryTime, OrderItemsRequest, RequestedLocationId) 
                 = (command.OrderId, command.RequestedDeliveryTime, command.OrderItemRequests, command.RequestedLocationId);
 
@@ -44,6 +43,8 @@ namespace PackIt.Application.Orders.Commands.CreateOrder.Handlers
     
             await _orderRepository.AddAsync(order, cancellationToken);
             await _unitOfWork.SaveAsync(cancellationToken);
+
+   
         }
     }
 }

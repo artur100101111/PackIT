@@ -28,7 +28,7 @@ namespace PackIt.Application.Orders.Factories
             if (except.Count() > 0)
             {
                string noItems = string.Join(", ", except);
-                throw new ItemNotFoundException($"Items with Id: {noItems} were not found.");
+                throw new ItemNotFoundException($"Item with Id: {noItems} was not found.");
             }
 
             foreach (var orderItemPrimitive in orderItemPrimitives)

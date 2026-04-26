@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using static System.Net.WebRequestMethods;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace PackIT.Infrastructure.Context
 {
     public sealed class CorrelationPropagationHandler : DelegatingHandler
     {
         private IHttpContextAccessor _httpContextAccessor;
-        public const string _headerName = "X-Correlation-Id";
+        public const string _headerName = CorrelationConstants.HeaderName;
+        public const string _itemKey = CorrelationConstants.ItemKey;
 
         public CorrelationPropagationHandler(IHttpContextAccessor  contextAccessor) 
         {
@@ -15,9 +14,10 @@ namespace PackIT.Infrastructure.Context
         }
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var correlationId = _httpContextAccessor.HttpContext?.Items["correlationId"] as string;
+            //var correlationId = _httpContextAccessor.HttpContext?.Items[_itemKey] as string;
+            var correlationId = CorrelationContext.CorrelationId;
 
-            if (string.IsNullOrEmpty(correlationId))
+            if (!string.IsNullOrEmpty(correlationId))
             {
                 request.Headers.TryAddWithoutValidation(_headerName, correlationId);
             }

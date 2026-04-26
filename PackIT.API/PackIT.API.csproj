@@ -25,4 +25,8 @@
     <ProjectReference Include="..\PackIt.Persistance\PackIT.Persistance.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="logs\" />
+  </ItemGroup>
+
 </Project>
